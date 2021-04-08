@@ -1,24 +1,35 @@
-// @ts-nocheck
+import { EditingState, RowDetailState } from "@devexpress/dx-react-grid";
 import {
   Grid,
   Table,
   TableHeaderRow,
+  TableRowDetail,
 } from "@devexpress/dx-react-grid-material-ui";
 import { Paper } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-
-const columns = [
-  { name: "id", title: "ID" },
-  { name: "product", title: "Product" },
-  { name: "owner", title: "Owner" },
-];
-const rows = [
-  { id: 0, product: "DevExtreme", owner: "DevExpress" },
-  { id: 1, product: "DevExtreme Reactive", owner: "DevExpress" },
-];
+import { DetailCell } from "./components/DetailCell";
+import { DetailContent } from "./components/DetailContent";
+import { ToggleCell } from "./components/ToggleCell";
+import { employees } from "./employees";
+import { DetailEditCell } from "./plugins/DetailEditCell";
 
 function App() {
+  const [columns] = useState([
+    { name: "Prefix", title: "Title" },
+    { name: "FirstName", title: "First Name" },
+    { name: "LastName", title: "Last Name" },
+    { name: "Position", title: "Position" },
+  ]);
+  const [rows, setRows] = useState(employees);
+
+  const commitChanges = ({ changed }: any) => {
+    const changedRows = rows.map((row) =>
+      changed[row.ID] ? { ...row, ...changed[row.ID] } : row
+    );
+    setRows(changedRows);
+  };
+
   return (
     <Paper>
       <Grid
@@ -26,8 +37,19 @@ function App() {
         columns={columns}
         rootComponent={(props) => <Grid.Root {...props} />}
       >
+        <RowDetailState defaultExpandedRowIds={[1]} />
+        <EditingState
+          defaultEditingRowIds={[1]}
+          onCommitChanges={commitChanges}
+        />
         <Table />
         <TableHeaderRow />
+        <TableRowDetail
+          contentComponent={DetailContent}
+          cellComponent={DetailCell}
+          toggleCellComponent={ToggleCell}
+        />
+        <DetailEditCell />
       </Grid>
     </Paper>
   );
