@@ -2,7 +2,8 @@ import { TableRowDetail } from "@devexpress/dx-react-grid-material-ui";
 import React from "react";
 
 export const DetailCell = (props: any) => {
-  console.log({ props });
+  console.log({ name: "DetailCell", props });
+
   const {
     children,
     changeRow,

@@ -1,7 +1,7 @@
 import { Grid as MuiGrid, Typography } from "@material-ui/core";
 
 export const DetailContent = (props: any) => {
-  console.log({ props });
+  console.log({ name: "DetailContent", props });
   const { row, ...rest } = props;
   const { processValueChange, applyChanges, cancelChanges } = rest;
 

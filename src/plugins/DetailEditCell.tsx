@@ -13,7 +13,12 @@ export const DetailEditCell = () => (
     <Action
       name="toggleDetailRowExpanded"
       action={(payload, getters, actions) => {
-        console.log({ payload, getters, actions });
+        console.log({
+          name: "DetailEditCell:Action",
+          payload,
+          getters,
+          actions,
+        });
         const { rowId } = payload;
         const { expandedDetailRowIds } = getters;
         const { startEditRows, stopEditRows } = actions;
@@ -29,13 +34,16 @@ export const DetailEditCell = () => (
     <Template
       name="tableCell"
       predicate={(params) => {
-        console.log({ params });
+        console.log({
+          name: "DetailEditCell:Template (predicate prop)",
+          params,
+        });
         const { tableRow } = params as any;
         return tableRow.type === TableRowDetail.ROW_TYPE;
       }}
     >
       {(params: any) => {
-        console.log({ params });
+        console.log({ name: "DetailEditCell:Template (render props)", params });
         return (
           <TemplateConnector>
             {(...args) => {

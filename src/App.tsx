@@ -5,7 +5,7 @@ import {
   TableHeaderRow,
   TableRowDetail,
 } from "@devexpress/dx-react-grid-material-ui";
-import { Paper } from "@material-ui/core";
+import { Box, Paper } from "@material-ui/core";
 import React, { useState } from "react";
 import "./App.css";
 import { DetailCell } from "./components/DetailCell";
@@ -13,6 +13,7 @@ import { DetailContent } from "./components/DetailContent";
 import { ToggleCell } from "./components/ToggleCell";
 import { employees } from "./employees";
 import { DetailEditCell } from "./plugins/DetailEditCell";
+import { Tasks } from "./plugins/TaskList";
 
 function App() {
   const [columns] = useState([
@@ -31,27 +32,39 @@ function App() {
   };
 
   return (
-    <Paper>
-      <Grid
-        rows={rows}
-        columns={columns}
-        rootComponent={(props) => <Grid.Root {...props} />}
-      >
-        <RowDetailState defaultExpandedRowIds={[1]} />
-        <EditingState
-          defaultEditingRowIds={[1]}
-          onCommitChanges={commitChanges}
-        />
-        <Table />
-        <TableHeaderRow />
-        <TableRowDetail
-          contentComponent={DetailContent}
-          cellComponent={DetailCell}
-          toggleCellComponent={ToggleCell}
-        />
-        <DetailEditCell />
-      </Grid>
-    </Paper>
+    <>
+      <Box m={2}>
+        <Paper elevation={3}>
+          <Box p={2}>
+            <Tasks />
+          </Box>
+        </Paper>
+      </Box>
+
+      <Box m={2}>
+        <Paper elevation={3}>
+          <Grid
+            rows={rows}
+            columns={columns}
+            rootComponent={(props) => <Grid.Root {...props} />}
+          >
+            <RowDetailState defaultExpandedRowIds={[1]} />
+            <EditingState
+              defaultEditingRowIds={[1]}
+              onCommitChanges={commitChanges}
+            />
+            <Table />
+            <TableHeaderRow />
+            <TableRowDetail
+              contentComponent={DetailContent}
+              cellComponent={DetailCell}
+              toggleCellComponent={ToggleCell}
+            />
+            <DetailEditCell />
+          </Grid>
+        </Paper>
+      </Box>
+    </>
   );
 }
 
